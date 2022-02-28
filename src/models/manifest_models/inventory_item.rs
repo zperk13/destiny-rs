@@ -41,6 +41,7 @@ pub struct InventoryItem {
     pub equipping_block: Option<EquippingBlock>,
     pub translation_block: Option<ItemTranslationBlock>,
     pub preview: Option<ItemPreviewBlock>,
+    pub quality: Option<ItemQualityBlock>,
     /// mapped to [`Lore`](crate::models::manifest::ManifestKey::Lore)
     pub lore_hash: Option<Hash>,
     /// mapped to [`InventoryItem`](crate::models::manifest::ManifestKey::InventoryItem)
@@ -251,4 +252,26 @@ pub struct DerivedItem {
     pub item_description: String,
     pub icon_path: String,
     pub vendor_item_index: Int32,
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyItemQualityBlockDefinition.html#schema_Destiny-Definitions-DestinyItemQualityBlockDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemQualityBlock {
+    pub item_levels: Vec<Int32>,
+    pub quality_level: Int32,
+    pub infusion_category_hashes: Vec<Hash>,
+    /// mapped to ???
+    pub progression_level_requirement_hash: Hash,
+    pub current_version: Uint32,
+    pub versions: Vec<ItemVersion>,
+    pub display_version_watermark_icons: Vec<String>,
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyItemVersionDefinition.html#schema_Destiny-Definitions-DestinyItemVersionDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemVersion {
+    /// mapped to ???
+    pub power_cap_hash: Hash
 }
