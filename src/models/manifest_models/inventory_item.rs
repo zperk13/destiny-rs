@@ -42,6 +42,7 @@ pub struct InventoryItem {
     pub translation_block: Option<ItemTranslationBlock>,
     pub preview: Option<ItemPreviewBlock>,
     pub quality: Option<ItemQualityBlock>,
+    pub value: Option<ItemValueBlock>,
     /// mapped to [`Lore`](crate::models::manifest::ManifestKey::Lore)
     pub lore_hash: Option<Hash>,
     /// mapped to [`InventoryItem`](crate::models::manifest::ManifestKey::InventoryItem)
@@ -274,4 +275,23 @@ pub struct ItemQualityBlock {
 pub struct ItemVersion {
     /// mapped to ???
     pub power_cap_hash: Hash
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyItemValueBlockDefinition.html#schema_Destiny-Definitions-DestinyItemValueBlockDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemValueBlock {
+    pub item_value: Vec<ItemQuantity>,
+    pub value_description: Option<String>,
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-DestinyItemQuantity.html#schema_Destiny-DestinyItemQuantity)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemQuantity {
+    /// mapped to [`InventoryItem`](crate::models::manifest::ManifestKey::InventoryItem)
+    pub item_hash: Hash,
+    pub item_instance_id: Option<Int64>,
+    pub quantity: Int32,
+    pub has_conditional_visibility: bool,
 }
