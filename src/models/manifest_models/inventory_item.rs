@@ -39,6 +39,7 @@ pub struct InventoryItem {
     // mapped to ???
     pub emblem_objective_hash: Option<Hash>,
     pub equipping_block: Option<EquippingBlock>,
+    pub translation_block: Option<ItemTranslationBlock>,
     /// mapped to [`Lore`](crate::models::manifest::ManifestKey::Lore)
     pub lore_hash: Option<Hash>,
     /// mapped to [`InventoryItem`](crate::models::manifest::ManifestKey::InventoryItem)
@@ -186,4 +187,34 @@ pub struct EquippingBlock {
     pub attributes: Int32,
     pub ammo_type: Int32,
     pub display_strings: Vec<String>,
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyItemTranslationBlockDefinition.html#schema_Destiny-Definitions-DestinyItemTranslationBlockDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemTranslationBlock {
+    pub weapon_pattern_identifier: String,
+    pub weapon_pattern_hash: Hash,
+    pub default_dyes: Vec<DyeReference>,
+    pub locked_dyes: Vec<DyeReference>,
+    pub custom_dyes: Vec<DyeReference>,
+    pub arrangements: Vec<GearArtArrangementReference>,
+    pub has_geometry: bool,
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-DyeReference.html#schema_Destiny-DyeReference)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct DyeReference {
+    pub channel_hash: Hash,
+    pub dye_hash: Hash,
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyGearArtArrangementReference.html#schema_Destiny-Definitions-DestinyGearArtArrangementReference)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct GearArtArrangementReference {
+    // mapped to ???
+    pub class_hash: Hash,
+    pub art_arrangement_hash: Hash,
 }
