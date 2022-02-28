@@ -6,7 +6,8 @@ use {
             manifest_models::DestinyDisplayProperties,
         },
     },
-    serde::Deserialize
+    serde::Deserialize,
+    std::collections::HashMap
 };
 
 /// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyInventoryItemDefinition.html#schema_Destiny-Definitions-DestinyInventoryItemDefinition)
@@ -43,6 +44,7 @@ pub struct InventoryItem {
     pub preview: Option<ItemPreviewBlock>,
     pub quality: Option<ItemQualityBlock>,
     pub value: Option<ItemValueBlock>,
+    pub source_data: Option<ItemSourceBlock>,
     /// mapped to [`Lore`](crate::models::manifest::ManifestKey::Lore)
     pub lore_hash: Option<Hash>,
     /// mapped to [`InventoryItem`](crate::models::manifest::ManifestKey::InventoryItem)
@@ -294,4 +296,50 @@ pub struct ItemQuantity {
     pub item_instance_id: Option<Int64>,
     pub quantity: Int32,
     pub has_conditional_visibility: bool,
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyItemSourceBlockDefinition.html#schema_Destiny-Definitions-DestinyItemSourceBlockDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemSourceBlock {
+    /// mapped to ???
+    pub source_hashes: Vec<Hash>,
+    pub sources: Vec<ItemSource>,
+    pub exclusive: Option<Int32>,
+    pub vendor_sources: Vec<ItemVendorSourceReference>
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-Sources-DestinyItemSourceDefinition.html#schema_Destiny-Definitions-Sources-DestinyItemSourceDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemSource {
+    pub level: Int32,
+    pub min_quality: Int32,
+    pub max_quality: Int32,
+    pub min_level_required: Int32,
+    pub max_level_required: Int32,
+    pub computed_stats: HashMap<Uint32, InventoryItemStat>,
+    /// mapped to ???
+    pub source_hashes: Vec<Hash>
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyInventoryItemStatDefinition.html#schema_Destiny-Definitions-DestinyInventoryItemStatDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct InventoryItemStat {
+    /// mapped to ???
+    pub stat_hash: Hash,
+    pub value: Int32,
+    pub minimum: Int32,
+    pub maximum: Int32,
+    pub display_maximum: Option<Int32>
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyItemVendorSourceReference.html#schema_Destiny-Definitions-DestinyItemVendorSourceReference)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemVendorSourceReference {
+    /// mapped to ???
+    pub vendor_hash: Hash,
+    pub vendor_item_indexes: Vec<Int32>,
 }
