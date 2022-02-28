@@ -31,7 +31,7 @@ pub struct InventoryItem {
     pub item_type_and_tier_display_name: String,
     pub display_source: String,
     pub tooltip_style: Option<String>,
-    pub action: ItemActionBlock,
+    pub action: Option<ItemActionBlock>,
     pub inventory: ItemInventoryBlock,
     pub set_data: Option<ItemSetBlock>,
     /// mapped to [`Lore`](crate::models::manifest::ManifestKey::Lore)
