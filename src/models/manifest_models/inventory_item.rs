@@ -37,6 +37,7 @@ pub struct InventoryItem {
     pub set_data: Option<ItemSetBlock>,
     // mapped to ???
     pub emblem_objective_hash: Option<Hash>,
+    pub equipping_block: Option<EquippingBlock>,
     // TODO pub stats: Option<ItemStatBlock>,
     /// mapped to [`Lore`](crate::models::manifest::ManifestKey::Lore)
     pub lore_hash: Option<Hash>,
@@ -170,4 +171,19 @@ pub struct ItemCraftingBlockBonusPlug {
     pub socket_type_hash: Hash,
     /// mapped to [`InventoryItem`](crate::models::manifest::ManifestKey::InventoryItem)
     pub plug_item_hash: Hash,
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyEquippingBlockDefinition.html#schema_Destiny-Definitions-DestinyEquippingBlockDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct EquippingBlock {
+    /// mapped to ???
+    pub gearset_item_hash: Option<Hash>,
+    pub unique_label: String,
+    pub unique_label_hash: Hash,
+    /// mapped to ???
+    pub equipment_slot_type_hash: Hash,
+    pub attributes: Int32,
+    pub ammo_type: Int32,
+    pub display_strings: Vec<String>,
 }
