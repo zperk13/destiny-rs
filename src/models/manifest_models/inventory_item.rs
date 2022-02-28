@@ -32,6 +32,7 @@ pub struct InventoryItem {
     pub display_source: String,
     pub tooltip_style: Option<String>,
     pub action: Option<ItemActionBlock>,
+    pub crafting: Option<ItemCraftingBlock>,
     pub inventory: ItemInventoryBlock,
     pub set_data: Option<ItemSetBlock>,
     /// mapped to [`Lore`](crate::models::manifest::ManifestKey::Lore)
@@ -142,4 +143,28 @@ pub struct ItemSetBlockEntry {
     pub tracking_value: Int32,
     /// mapped to [`InventoryItem`](crate::models::manifest::ManifestKey::InventoryItem)
     pub item_hash: Hash,
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyItemCraftingBlockDefinition.html#schema_Destiny-Definitions-DestinyItemCraftingBlockDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemCraftingBlock {
+    /// mapped to [`InventoryItem`](crate::models::manifest::ManifestKey::InventoryItem)
+    pub output_item_hash: Hash,
+    /// mapped to ???
+    pub required_socket_type_hashes: Vec<Hash>,
+    pub failed_requirement_strings: Vec<String>,
+    /// mapped to ???
+    pub base_material_requirements: Option<Hash>,
+    pub bonus_plugs: Option<Vec<ItemCraftingBlockBonusPlug>>
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyItemCraftingBlockBonusPlugDefinition.html#schema_Destiny-Definitions-DestinyItemCraftingBlockBonusPlugDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemCraftingBlockBonusPlug {
+    /// mapped to ???
+    pub socket_type_hash: Hash,
+    /// mapped to [`InventoryItem`](crate::models::manifest::ManifestKey::InventoryItem)
+    pub plug_item_hash: Hash,
 }
