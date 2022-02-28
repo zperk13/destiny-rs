@@ -40,6 +40,7 @@ pub struct InventoryItem {
     pub emblem_objective_hash: Option<Hash>,
     pub equipping_block: Option<EquippingBlock>,
     pub translation_block: Option<ItemTranslationBlock>,
+    pub preview: Option<ItemPreviewBlock>,
     /// mapped to [`Lore`](crate::models::manifest::ManifestKey::Lore)
     pub lore_hash: Option<Hash>,
     /// mapped to [`InventoryItem`](crate::models::manifest::ManifestKey::InventoryItem)
@@ -217,4 +218,37 @@ pub struct GearArtArrangementReference {
     // mapped to ???
     pub class_hash: Hash,
     pub art_arrangement_hash: Hash,
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/#/components/schemas/Destiny.Definitions.DestinyItemPreviewBlockDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemPreviewBlock {
+    pub screen_style: String,
+    // mapped to ???
+    pub preview_vendor_hash: Option<Hash>,
+    // mapped to ???
+    pub artifact_hash: Option<Hash>,
+    pub preview_action_string: Option<String>,
+    pub derived_item_categories: Vec<DerivedItemCategory>
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-Items-DestinyDerivedItemCategoryDefinition.html#schema_Destiny-Definitions-Items-DestinyDerivedItemCategoryDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct DerivedItemCategory {
+    pub category_description: String,
+    pub items: Vec<DerivedItem>
+}
+
+/// [Bungie documentation](https://bungie-net.github.io/multi/schema_Destiny-Definitions-Items-DestinyDerivedItemDefinition.html#schema_Destiny-Definitions-Items-DestinyDerivedItemDefinition)
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct DerivedItem {
+    pub item_hash: Option<Hash>,
+    pub item_name: String,
+    pub item_detail: String,
+    pub item_description: String,
+    pub icon_path: String,
+    pub vendor_item_index: Int32,
 }
