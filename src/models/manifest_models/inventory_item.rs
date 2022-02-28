@@ -35,6 +35,8 @@ pub struct InventoryItem {
     pub crafting: Option<ItemCraftingBlock>,
     pub inventory: ItemInventoryBlock,
     pub set_data: Option<ItemSetBlock>,
+    // mapped to ???
+    pub emblem_objective_hash: Option<Hash>,
     // TODO pub stats: Option<ItemStatBlock>,
     /// mapped to [`Lore`](crate::models::manifest::ManifestKey::Lore)
     pub lore_hash: Option<Hash>,
